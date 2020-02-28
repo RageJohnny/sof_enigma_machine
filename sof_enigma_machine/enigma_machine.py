@@ -42,6 +42,11 @@
 
 # ----------------- Settings for the Enigma-Machine -----------------
 
+import random as r
+from colorama import init
+from colorama import Fore
+import time
+
 rotors = ("I", "II", "III")
 reflector = "PQR-D"
 settings_ring = "ABC"
@@ -252,6 +257,30 @@ def enigma_machine(emptytext):
     return ciphertext
 
 
+def matrix_effect():
+    init()
+
+    symbols = ["0", "1", " ", " "]
+    line = []
+    counter = 0
+
+    for i in range(118):
+        x = r.randint(0, 3)
+        line.append(symbols[x])
+
+        counter += 1
+
+    for i in range(100):
+        if counter % 5 == 0:
+            r_symbols = [r.randint(0, 117) for x in range(10)]
+
+            for i in r_symbols:
+                line[i] = symbols[r.randint(0, 3)]
+        print(Fore.GREEN, *line)
+        counter += 1
+        time.sleep(0.01)
+
+
 # ----------------------------------------------------
 
 # OUTPUT:
@@ -276,5 +305,6 @@ print("")
 print("Please enter the text you want to encrypt:")
 user_input = input(">>")
 solution_encrypted = enigma_machine(user_input)
+matrix_effect()
 
 print("\nEncrypted Text: \n " + solution_encrypted)
